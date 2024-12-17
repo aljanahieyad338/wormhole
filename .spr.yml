@@ -1,7 +1,37 @@
 githubRepoOwner: wormhole-foundation
 githubRepoName: wormhole
 githubHost: github.com
-requireChecks: true
-requireApproval: true
+requireChecks: true  # Обязательные проверки перед слиянием
+requireApproval: true  # Требуется одобрение для слияния
 githubRemote: origin
 githubBranch: main
+
+# Уведомления о статусах пулл-реквестов
+pullRequestNotifications:
+  success: true   # Уведомления при успешной проверке
+  failure: true   # Уведомления при ошибке проверки
+
+# Дополнительные параметры для работы с ветками и пулл-реквестами
+branchProtection:
+  - name: main
+    requiredApprovingReviews: 1  # Минимум 1 одобрение для слияния
+    requiredStatusChecks:
+      - check-name: build  # Пример проверки, которая должна быть выполнена
+    enforceAdmins: true  # Применить настройки для администраторов
+
+# Настройки для уведомлений
+notifications:
+  success:
+    - slack: 'https://slack.com/webhook-success'
+    - email: 'team@success.com'
+  failure:
+    - slack: 'https://slack.com/webhook-failure'
+    - email: 'team@failure.com'
+
+# Дополнительные правила для работы с Pull Request
+pullRequest:
+  - action: opened
+    checkRequired: true
+    requireReview: true   # Требуется минимум одно ревью перед слиянием
+  - action: synchronize
+    requireApproval: true  # Требуется одобрение при обновлениях пулл-реквеста
